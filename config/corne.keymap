@@ -108,15 +108,22 @@
         // chris had brackets `[` and `]` which mapped to `-` and `=` on this layer;
         // the Corne has neither in base, so:
         //   - `;` and `'` positions become `-` and `=`  (closest to original `[ ]` spots)
-        //   - The bottom row gains the bracket/symbol set chris loses without those
-        //     dedicated keys: `[ ] { } | ~ \``
+        //   - The bottom-row left side gains the brackets chris loses on Corne base
+        //
+        // Bluetooth + output controls live on the LEFT-hand home row (NUM is held with
+        // the RIGHT thumb, so left hand is free). One BT profile per device:
+        //   - A -> BT 0 (lemur — this laptop)
+        //   - S -> BT 1 (work MacBook Pro)
+        //   - D -> BT 2 (spare profile)
+        //   - F -> BT_CLR (wipe current profile's pairing — use if pairing breaks)
+        //   - G -> OUT_TOG (toggle USB <-> BLE output)
         //
         // Shifted variants (!@#$%^&*()_+) come for free — hold shift in this layer.
         //
         // ┌─────┬─────┬─────┬─────┬─────┬─────┐                  ┌─────┬─────┬─────┬─────┬─────┬─────┐
         // │     │  1  │  2  │  3  │  4  │  5  │                  │  6  │  7  │  8  │  9  │  0  │     │
         // ├─────┼─────┼─────┼─────┼─────┼─────┤                  ├─────┼─────┼─────┼─────┼─────┼─────┤
-        // │     │     │     │     │     │     │                  │     │     │     │     │  -  │  =  │
+        // │     │BT 0 │BT 1 │BT 2 │BTCLR│OUTTG│                  │     │     │     │     │  -  │  =  │
         // ├─────┼─────┼─────┼─────┼─────┼─────┤                  ├─────┼─────┼─────┼─────┼─────┼─────┤
         // │     │  [  │  ]  │  {  │  }  │  |  │                  │  `  │  ~  │     │     │     │     │
         // └─────┴─────┴─────┴─────┼─────┼─────┼─────┐      ┌─────┼─────┼─────┼─────┴─────┴─────┴─────┘
@@ -125,10 +132,10 @@
         // ----------------------------------------------------------------------------
         num_layer {
             bindings = <
-&trans  &kp N1     &kp N2     &kp N3     &kp N4     &kp N5         &kp N6      &kp N7      &kp N8   &kp N9   &kp N0      &trans
-&trans  &trans     &trans     &trans     &trans     &trans         &trans      &trans      &trans   &trans   &kp MINUS   &kp EQUAL
-&trans  &kp LBKT   &kp RBKT   &kp LBRC   &kp RBRC   &kp PIPE       &kp GRAVE   &kp TILDE   &trans   &trans   &trans      &trans
-                              &trans     &trans     &trans         &trans      &trans      &trans
+&trans  &kp N1        &kp N2        &kp N3        &kp N4        &kp N5         &kp N6      &kp N7      &kp N8   &kp N9   &kp N0      &trans
+&trans  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_CLR    &out OUT_TOG   &trans      &trans      &trans   &trans   &kp MINUS   &kp EQUAL
+&trans  &kp LBKT      &kp RBKT      &kp LBRC      &kp RBRC      &kp PIPE       &kp GRAVE   &kp TILDE   &trans   &trans   &trans      &trans
+                                    &trans        &trans        &trans         &trans      &trans      &trans
             >;
         };
     };
