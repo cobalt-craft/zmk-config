@@ -16,7 +16,7 @@ See [`config/corne.keymap`](config/corne.keymap) for the full layer maps with AS
 ## Build & flash
 
 1. **Push** any keymap change to this repo. GitHub Actions builds two `.uf2` files automatically (~5 min).
-2. **Download** the artifact: Actions tab → latest run → `firmware.zip`. Unzip to get `corne_left-nice_nano_v2-zmk.uf2` and `corne_right-nice_nano_v2-zmk.uf2`.
+2. **Download** the artifact: `gh run download` (or Actions tab → latest run). Produces `firmware/corne_left-nice_nano__zmk-zmk.uf2`, `firmware/corne_right-nice_nano__zmk-zmk.uf2`, and `firmware/settings_reset-nice_nano__zmk-zmk.uf2`.
 3. **Flash a half**:
    - Plug that half into USB
    - Double-tap the reset button on the controller — it mounts as `/run/media/chris/NICENANO`
@@ -26,7 +26,7 @@ See [`config/corne.keymap`](config/corne.keymap) for the full layer maps with AS
 
 ## Recovering from breakage
 
-If the halves stop pairing or the keyboard goes weird, flash `settings_reset-nice_nano_v2-zmk.uf2` onto each half (also produced by the build). That wipes saved Bluetooth pairings; re-pair after.
+If the halves stop pairing or the keyboard goes weird, flash `settings_reset-nice_nano__zmk-zmk.uf2` onto each half (also produced by the build). That wipes saved Bluetooth pairings; re-pair after.
 
 ## Editing the layout
 
