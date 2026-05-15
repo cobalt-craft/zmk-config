@@ -2,11 +2,14 @@
 # A split keyboard needs both halves built separately — they run different
 # firmware (one is the BLE central, one is the peripheral).
 include:
-  - board: nice_nano_v2
+  # Board name format changed with the Zephyr 4.1 migration (Dec 2025):
+  # `nice_nano_v2` -> `nice_nano@2.0.0//zmk` (short form: `nice_nano//zmk`).
+  # See https://zmk.dev/blog/2025/12/09/zephyr-4-1#zmk-board-variant
+  - board: nice_nano//zmk
     shield: corne_left
-  - board: nice_nano_v2
+  - board: nice_nano//zmk
     shield: corne_right
   # Settings reset firmware: flash this onto a half to wipe paired BT keys
   # if the halves stop talking to each other or won't pair to a host.
-  - board: nice_nano_v2
+  - board: nice_nano//zmk
     shield: settings_reset
