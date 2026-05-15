@@ -1,0 +1,6 @@
+.west/
+build/
+zephyr/
+modules/
+firmware/
+*.uf2

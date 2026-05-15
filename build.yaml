@@ -1,0 +1,12 @@
+# GitHub Actions build matrix. Each entry produces one .uf2 firmware file.
+# A split keyboard needs both halves built separately — they run different
+# firmware (one is the BLE central, one is the peripheral).
+include:
+  - board: nice_nano_v2
+    shield: corne_left
+  - board: nice_nano_v2
+    shield: corne_right
+  # Settings reset firmware: flash this onto a half to wipe paired BT keys
+  # if the halves stop talking to each other or won't pair to a host.
+  - board: nice_nano_v2
+    shield: settings_reset

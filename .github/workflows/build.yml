@@ -1,0 +1,13 @@
+# Standard ZMK user-config build workflow. Reads build.yaml at the repo root
+# and produces a downloadable artifact (firmware.zip) containing the .uf2 files.
+# Triggers: every push, every PR, and manual dispatch from the Actions tab.
+name: Build ZMK firmware
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@main

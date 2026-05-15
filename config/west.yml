@@ -1,0 +1,14 @@
+# West manifest: tells the ZMK build system which upstream ZMK source to pull
+# in alongside this user config. Pinning to `main` follows community convention;
+# switch to a tag (e.g. `v0.4.0`) if you want reproducible builds.
+manifest:
+  remotes:
+    - name: zmkfirmware
+      url-base: https://github.com/zmkfirmware
+  projects:
+    - name: zmk
+      remote: zmkfirmware
+      revision: main
+      import: app/west.yml
+  self:
+    path: config

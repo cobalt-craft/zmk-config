@@ -1,0 +1,135 @@
+/*
+ * Corne 42 LP keymap — mirror of chris's Kanata config from ~/.config/kanata/kanata.kbd
+ *
+ * Layers:
+ *   0 DEFAULT — QWERTY base with homerow mods on ASDF/JKL;
+ *   1 NAV     — held via outer-mid-L key (caps-lock position); arrows on HJKL
+ *   2 NUM     — held via right-inner thumb (mirrors `\` in Kanata); top-row digits + symbols
+ *
+ * Combos:
+ *   LSFT + RSFT  ->  BSPC   (mirror of kanata `switch` aliases)
+ */
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+
+#define DEFAULT 0
+#define NAV     1
+#define NUM     2
+
+/ {
+    behaviors {
+        // Homerow mod-tap. tapping-term mirrors kanata $hold-time (200 ms).
+        // quick-tap-ms mirrors kanata $tap-time (110 ms): a re-press within this
+        // window after release is forced to be a tap, so double-letters don't get
+        // swallowed as holds.
+        // flavor "tap-preferred" = if you hold the key past tapping-term WITHOUT
+        // pressing another key, it becomes a hold; otherwise tap. Closest match
+        // to kanata's default tap-hold semantics.
+        hm: homerow_mod {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            quick-tap-ms = <125>;
+            flavor = "tap-preferred";
+            bindings = <&kp>, <&kp>;
+        };
+    };
+
+    combos {
+        compatible = "zmk,combos";
+
+        // Hold one shift, tap the other -> backspace.
+        // Position 24 = LSHFT (bottom-row outer-left), position 35 = RSHFT (bottom-row outer-right).
+        // 50 ms term keeps it from firing during normal capitalization rolls.
+        combo_bspc {
+            timeout-ms = <50>;
+            key-positions = <24 35>;
+            bindings = <&kp BSPC>;
+        };
+    };
+
+    keymap {
+        compatible = "zmk,keymap";
+
+        // ----------------------------------------------------------------------------
+        // Layer 0 — DEFAULT
+        //
+        // ┌──────┬─────┬─────┬─────┬─────┬─────┐                  ┌─────┬─────┬─────┬─────┬─────┬──────┐
+        // │ TAB  │  Q  │  W  │  E  │  R  │  T  │                  │  Y  │  U  │  I  │  O  │  P  │ BSPC │
+        // ├──────┼─────┼─────┼─────┼─────┼─────┤                  ├─────┼─────┼─────┼─────┼─────┼──────┤
+        // │ ESC  │  A  │  S  │  D  │  F  │  G  │                  │  H  │  J  │  K  │  L  │  ;  │  '   │
+        // │ /NAV │/GUI │/ALT │/CTL │/SFT │     │                  │     │/SFT │/CTL │/ALT │/GUI │ /CTL │
+        // ├──────┼─────┼─────┼─────┼─────┼─────┤                  ├─────┼─────┼─────┼─────┼─────┼──────┤
+        // │ LSFT │  Z  │  X  │  C  │  V  │  B  │                  │  N  │  M  │  ,  │  .  │  /  │ RSFT │
+        // └──────┴─────┴─────┴─────┼─────┼─────┼─────┐      ┌─────┼─────┼─────┼─────┴─────┴─────┴──────┘
+        //                          │ GUI │ SPC │ CTL │      │  \  │ ENT │ ALT │
+        //                          │     │     │     │      │/NUM │     │     │
+        //                          └─────┴─────┴─────┘      └─────┴─────┴─────┘
+        // ----------------------------------------------------------------------------
+        default_layer {
+            bindings = <
+&kp TAB         &kp Q       &kp W       &kp E         &kp R         &kp T         &kp Y         &kp U         &kp I         &kp O        &kp P           &kp BSPC
+&lt NAV ESC     &hm LGUI A  &hm LALT S  &hm LCTRL D   &hm LSHFT F   &kp G         &kp H         &hm RSHFT J   &hm RCTRL K   &hm RALT L   &hm RGUI SEMI   &hm RCTRL SQT
+&kp LSHFT       &kp Z       &kp X       &kp C         &kp V         &kp B         &kp N         &kp M         &kp COMMA     &kp DOT      &kp FSLH        &kp RSHFT
+                                        &kp LGUI      &kp SPACE     &kp LCTRL     &lt NUM BSLH  &kp RET       &kp RALT
+            >;
+        };
+
+        // ----------------------------------------------------------------------------
+        // Layer 1 — NAV  (held via ESC/NAV key, mirrors kanata `cap` -> nav layer)
+        //
+        // Only the right-hand HJKL positions change to arrows. Everything else passes
+        // through to base. J/K/L are explicit (not transparent) so the homerow mod-tap
+        // on those keys can't bleed into nav.
+        //
+        //                                                          ┌─────┬─────┬─────┬─────┬─────┬─────┐
+        //                                                          │     │     │     │     │     │     │
+        //                                                          ├─────┼─────┼─────┼─────┼─────┼─────┤
+        //                                                          │  ←  │  ↓  │  ↑  │  →  │     │     │
+        //                                                          ├─────┼─────┼─────┼─────┼─────┼─────┤
+        //                                                          │     │     │     │     │     │     │
+        //                                                          └─────┴─────┴─────┴─────┴─────┴─────┘
+        // ----------------------------------------------------------------------------
+        nav_layer {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans     &trans     &trans     &trans   &trans     &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans     &kp LEFT   &kp DOWN   &kp UP   &kp RIGHT  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans     &trans     &trans     &trans   &trans     &trans  &trans
+                        &trans  &trans  &trans     &trans     &trans     &trans
+            >;
+        };
+
+        // ----------------------------------------------------------------------------
+        // Layer 2 — NUM  (held via right-inner-thumb, mirrors kanata `\` -> numrow)
+        //
+        // Top row projects onto QWERTY row (Q->1, W->2, ..., P->0). On the Moonlander
+        // chris had brackets `[` and `]` which mapped to `-` and `=` on this layer;
+        // the Corne has neither in base, so:
+        //   - `;` and `'` positions become `-` and `=`  (closest to original `[ ]` spots)
+        //   - The bottom row gains the bracket/symbol set chris loses without those
+        //     dedicated keys: `[ ] { } | ~ \``
+        //
+        // Shifted variants (!@#$%^&*()_+) come for free — hold shift in this layer.
+        //
+        // ┌─────┬─────┬─────┬─────┬─────┬─────┐                  ┌─────┬─────┬─────┬─────┬─────┬─────┐
+        // │     │  1  │  2  │  3  │  4  │  5  │                  │  6  │  7  │  8  │  9  │  0  │     │
+        // ├─────┼─────┼─────┼─────┼─────┼─────┤                  ├─────┼─────┼─────┼─────┼─────┼─────┤
+        // │     │     │     │     │     │     │                  │     │     │     │     │  -  │  =  │
+        // ├─────┼─────┼─────┼─────┼─────┼─────┤                  ├─────┼─────┼─────┼─────┼─────┼─────┤
+        // │     │  [  │  ]  │  {  │  }  │  |  │                  │  `  │  ~  │     │     │     │     │
+        // └─────┴─────┴─────┴─────┼─────┼─────┼─────┐      ┌─────┼─────┼─────┼─────┴─────┴─────┴─────┘
+        //                         │     │     │     │      │     │     │     │
+        //                         └─────┴─────┴─────┘      └─────┴─────┴─────┘
+        // ----------------------------------------------------------------------------
+        num_layer {
+            bindings = <
+&trans  &kp N1     &kp N2     &kp N3     &kp N4     &kp N5         &kp N6      &kp N7      &kp N8   &kp N9   &kp N0      &trans
+&trans  &trans     &trans     &trans     &trans     &trans         &trans      &trans      &trans   &trans   &kp MINUS   &kp EQUAL
+&trans  &kp LBKT   &kp RBKT   &kp LBRC   &kp RBRC   &kp PIPE       &kp GRAVE   &kp TILDE   &trans   &trans   &trans      &trans
+                              &trans     &trans     &trans         &trans      &trans      &trans
+            >;
+        };
+    };
+};
