@@ -119,24 +119,34 @@
         //   - F -> BT_CLR (wipe current profile's pairing — use if pairing breaks)
         //   - G -> OUT_TOG (toggle USB <-> BLE output)
         //
+        // RGB underglow controls share the RIGHT-hand home row (free on NUM since
+        // the hold is the right thumb). Mnemonics:
+        //   - Y -> RGB_TOG (toggle on/off)
+        //   - U -> RGB_EFF (cycle effect: solid → breathe → spectrum → swirl → ...)
+        //   - I -> RGB_BRI (brightness +)
+        //   - O -> RGB_BRD (brightness -)
+        // Hue controls are on the row below (cells `,` and `.` on default):
+        //   - , -> RGB_HUI (hue +)
+        //   - . -> RGB_HUD (hue -)
+        //
         // Shifted variants (!@#$%^&*()_+) come for free — hold shift in this layer.
         //
         // ┌─────┬─────┬─────┬─────┬─────┬─────┐                  ┌─────┬─────┬─────┬─────┬─────┬─────┐
         // │     │  1  │  2  │  3  │  4  │  5  │                  │  6  │  7  │  8  │  9  │  0  │     │
         // ├─────┼─────┼─────┼─────┼─────┼─────┤                  ├─────┼─────┼─────┼─────┼─────┼─────┤
-        // │     │BT 0 │BT 1 │BT 2 │BTCLR│OUTTG│                  │     │     │     │     │  -  │  =  │
+        // │     │BT 0 │BT 1 │BT 2 │BTCLR│OUTTG│                  │TOG  │EFF  │BRI+ │BRI- │  -  │  =  │
         // ├─────┼─────┼─────┼─────┼─────┼─────┤                  ├─────┼─────┼─────┼─────┼─────┼─────┤
-        // │     │  [  │  ]  │  {  │  }  │  |  │                  │  `  │  ~  │     │     │     │     │
+        // │     │  [  │  ]  │  {  │  }  │  |  │                  │  `  │  ~  │HUE+ │HUE- │     │     │
         // └─────┴─────┴─────┴─────┼─────┼─────┼─────┐      ┌─────┼─────┼─────┼─────┴─────┴─────┴─────┘
         //                         │     │     │     │      │     │     │     │
         //                         └─────┴─────┴─────┘      └─────┴─────┴─────┘
         // ----------------------------------------------------------------------------
         num_layer {
             bindings = <
-&trans  &kp N1        &kp N2        &kp N3        &kp N4        &kp N5         &kp N6      &kp N7      &kp N8   &kp N9   &kp N0      &trans
-&trans  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_CLR    &out OUT_TOG   &trans      &trans      &trans   &trans   &kp MINUS   &kp EQUAL
-&trans  &kp LBKT      &kp RBKT      &kp LBRC      &kp RBRC      &kp PIPE       &kp GRAVE   &kp TILDE   &trans   &trans   &trans      &trans
-                                    &trans        &trans        &trans         &trans      &trans      &trans
+&trans  &kp N1        &kp N2        &kp N3        &kp N4        &kp N5         &kp N6              &kp N7              &kp N8              &kp N9              &kp N0      &trans
+&trans  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_CLR    &out OUT_TOG   &rgb_ug RGB_TOG     &rgb_ug RGB_EFF     &rgb_ug RGB_BRI     &rgb_ug RGB_BRD     &kp MINUS   &kp EQUAL
+&trans  &kp LBKT      &kp RBKT      &kp LBRC      &kp RBRC      &kp PIPE       &kp GRAVE           &kp TILDE           &rgb_ug RGB_HUI     &rgb_ug RGB_HUD     &trans      &trans
+                                    &trans        &trans        &trans         &trans              &trans              &trans
             >;
         };
     };
