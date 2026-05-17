@@ -1,0 +1,18 @@
+// Local overrides for the upstream Corne shield.
+//
+// Background: the upstream nice_nano overlay for this shield declares the
+// WS2812 strip with `chain-length = <10>` (visible at
+// app/boards/shields/corne/boards/nice_nano_nrf52840_zmk.overlay). The
+// KeebMaker Corne 42 LP has per-key RGB — 27 LEDs per side. With the
+// upstream count, only the first 10 chain positions are addressed, so
+// most of the physical LEDs stay dark.
+//
+// Devicetree node-merging lets us re-open `led_strip` (declared by label
+// upstream) and override just the property we care about. The pinctrl /
+// SPI / color-mapping all stay as the upstream defines them.
+
+/ {};
+
+&led_strip {
+    chain-length = <27>;
+};
