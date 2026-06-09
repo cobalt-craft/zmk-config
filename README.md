@@ -36,6 +36,17 @@ Edit `config/corne.keymap`. Keymap reference: <https://zmk.dev/docs/keymaps>. Co
 - Add a layer: copy a `*_layer` block, give it a new name, increment the layer index, and add a `&mo N` or `&lt N KEY` binding to trigger it.
 - Add a combo: drop a new block under `combos`, give it a unique name and a key-position pair.
 
-## Live editing without flashing (optional)
+## Live editing without flashing — ZMK Studio
 
-[ZMK Studio](https://zmk.studio) supports runtime keymap edits over USB for ZMK builds with the `studio-rpc-usb-uart` snippet. Not enabled in this config yet — flip on by adding `snippet: studio-rpc-usb-uart` to each entry in `build.yaml` and adding `CONFIG_ZMK_STUDIO=y` to `corne.conf`.
+[ZMK Studio](https://zmk.studio) is **enabled** on this config (left half only — see `build.yaml`). It lets you remap keys, move layers around, and tweak combos live over USB, no rebuild/reflash needed. The changes persist on the keyboard and override the compiled keymap.
+
+To use it:
+
+1. Plug the **left** half into USB (Studio runs on the central half).
+2. Open <https://zmk.studio> in Chrome/Edge (it uses WebSerial — Firefox won't work).
+3. Click connect and pick the keyboard's serial device.
+4. **Unlock for editing:** hold the NUM thumb key and tap the top-left key (TAB position) — that's `&studio_unlock`. It re-locks on idle.
+
+**Linux note:** WebSerial needs read/write on the `/dev/ttyACM*` device. If the browser can't open it, add yourself to the `dialout` group (`sudo usermod -aG dialout $USER`, then re-login) — or `udevadm` a rule. This is the one Linux-specific gotcha for Studio.
+
+The compiled `config/corne.keymap` remains the source of truth / baseline; commit substantive changes back here so a settings reset doesn't lose them.

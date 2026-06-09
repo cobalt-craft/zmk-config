@@ -132,8 +132,12 @@
         //
         // Shifted variants (!@#$%^&*()_+) come for free — hold shift in this layer.
         //
+        // ZMK Studio: the top-left key (TAB position) is &studio_unlock. With the
+        // keyboard plugged in by USB and open in the Studio web app, hold the NUM
+        // thumb and tap that key to unlock live keymap editing. Locks again on idle.
+        //
         // ┌─────┬─────┬─────┬─────┬─────┬─────┐                  ┌─────┬─────┬─────┬─────┬─────┬─────┐
-        // │     │  1  │  2  │  3  │  4  │  5  │                  │  6  │  7  │  8  │  9  │  0  │     │
+        // │UNLCK│  1  │  2  │  3  │  4  │  5  │                  │  6  │  7  │  8  │  9  │  0  │     │
         // ├─────┼─────┼─────┼─────┼─────┼─────┤                  ├─────┼─────┼─────┼─────┼─────┼─────┤
         // │     │BT 0 │BT 1 │BT 2 │BTCLR│OUTTG│                  │TOG  │EFF  │BRI+ │BRI- │  -  │  =  │
         // ├─────┼─────┼─────┼─────┼─────┼─────┤                  ├─────┼─────┼─────┼─────┼─────┼─────┤
@@ -144,7 +148,7 @@
         // ----------------------------------------------------------------------------
         num_layer {
             bindings = <
-&trans  &kp N1        &kp N2        &kp N3        &kp N4        &kp N5         &kp N6              &kp N7              &kp N8              &kp N9              &kp N0      &trans
+&studio_unlock  &kp N1  &kp N2        &kp N3        &kp N4        &kp N5         &kp N6              &kp N7              &kp N8              &kp N9              &kp N0      &trans
 &trans  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_CLR    &out OUT_TOG   &rgb_ug RGB_TOG     &rgb_ug RGB_EFF     &rgb_ug RGB_BRI     &rgb_ug RGB_BRD     &kp MINUS   &kp EQUAL
 &trans  &kp LBKT      &kp RBKT      &kp LBRC      &kp RBRC      &kp PIPE       &kp GRAVE           &kp TILDE           &rgb_ug RGB_HUI     &rgb_ug RGB_HUD     &trans      &trans
                                     &trans        &trans        &trans         &trans              &trans              &trans
